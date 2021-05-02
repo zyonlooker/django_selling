@@ -1,0 +1,82 @@
+{% extends 'selling/base.html' %}
+
+
+{% block category %}
+<div class='row'>
+  <div class='col-12' style='background-color:lavender;'>
+    <H4>免费出</H4>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-12' style='background-color:lavender;'>
+    {% if free_item_list_single %}
+        {% for free_item in free_item_list_single %}
+	<div class='row'>
+	  <div class='col-12' style='background-color:lavender;'>编号{{ free_item.id }}.</div>
+	</div>
+	<div class='row'>
+	  <div class='col-12' style='background-color:lavender;'>{{ free_item.title }}</div>
+	</div>
+	<div class='row'>
+	  <div class='col-5'>
+            <img src='{{ MEDIA_ROOT }}/{{ free_item.img }}' width=100% class='rounded' data-toggle='modal' data-target='#i{{ free_item.id }}'>
+	    <div class='modal fade' id='i{{ free_item.id }}' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+	      <div class='modal-dialog'>
+	        <div class='modal-content'>
+	          <div class='modal-header'>
+	            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+	          </div>
+	          <h5 class='modal-title' id='myModalLabel'>{{ free_item.title }}</h5>
+		  <div class='modal-body'>
+		    <img src='{{ MEDIA_ROOT }}/{{ free_item.img }}' class='rounded' width=100%>
+		  </div>
+		  <div class='modal-footer justify-content-start'>
+                    <p>{{ free_item.description }}</p>
+                  </div>
+		</div>
+              </div>
+	    </div>
+	  </div>
+	  <div class='col-7'>
+            <div class='row'>
+	      <div class='col-6' style='background-color:lavender;'><p class='text-right'>价格:</p></div>
+              <div class='col-6' style='background-color:lavender;'>{{ free_item.price }}</div>
+	    </div>
+	    <div class='row'>
+              <div class='col-6' style='background-color:lavender;'><p class='text-right'>时间:</p></div>
+	      <div class='col-6' style='background-color:lavender;'>{{ free_item.avi_date }}</div>
+	    </div>
+	  </div>
+	</div>
+	<div class='row'>
+          <div class='col-5' style='background-color:lavender;'><p class='text-right'>物品描述:</p></div>
+	  <div class='col-7' style='background-color:lavender;'>{{ free_item.description }}</div>
+	</div>
+	<hr>
+        {% endfor %}
+    {% else %}
+        <div class='col-sm'><p class='text-certer'>暂无物品</p></div>
+    {% endif %}
+
+    <div class='pagination'>
+      <span class='step-link'>
+	      {% if free_item_list_single.has_previous %}
+	        <a href="?page=1">&laquo; 首页</a>
+		&nbsp;&nbsp;
+                <a href="?page={{ free_item_list_single.previous_page_number }}">&lt;</a>
+	      {% endif %}
+	      &nbsp;&nbsp;
+	      <span class='current'>
+	        Page {{ free_item_list_single.number }} of {{ free_item_list_single.paginator.num_pages }}.
+	      </span>
+	      &nbsp;&nbsp;
+	      {% if free_item_list_single.has_next %}
+                  <a href='?page={{ free_item_list_single.next_page_number }}'>&gt;</a>
+		  &nbsp;&nbsp;
+		  <a href="?page={{ free_item_list_single.paginator.num_pages }}">尾页 &raquo;</a>
+              {% endif %}
+    </div>
+
+  </div>
+</div>
+{% endblock category %}

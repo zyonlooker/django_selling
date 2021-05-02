@@ -1,0 +1,82 @@
+{% extends 'selling/base.html' %}
+
+{% block category %}
+<div class='row'>
+  <div class='col-12' style='background-color:lavender;'>
+    <H4>半价出</H4>
+  </div>
+</div>
+<div class='row'>
+  <div class='col-12' style='background-color:lavender;'>
+    {% if half_item_list_single %}
+        {% for half_item in half_item_list_single %}
+	<div class='row'>
+	  <div class='col-12' style='background-color:lavender;'>编号{{ half_item.id }}.</div>
+	</div>
+	<div class='row'>
+	  <div class='col-12' style='background-color:lavender;'>{{ half_item.title }}</div>
+	</div>
+	<div class='row'>
+	  <div class='col-5'>
+            <img src='{{ MEDIA_ROOT }}/{{ half_item.img }}' width=100% class='rounded' data-toggle='modal' data-target='#i{{ half_item.id }}'>
+            <div class='modal fade' id='i{{ half_item.id }}' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+              <div class='modal-dialog'>
+                <div class='modal-content'>
+                  <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                  </div>
+                  <h5 class='modal-title' id='myModalLabel'>{{ half_item.title }}</h5>
+                  <div class='modal-body'>
+                    <img src='{{ MEDIA_ROOT }}/{{ half_item.img }}' class='rounded' width=100%>
+                  </div>
+                  <div class='modal-footer justify-content-start'>
+                    <p>{{ half_item.description }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+	  <div class='col-7'>
+            <div class='row'>
+              <div class='col-6' style='background-color:lavender;'><p class='text-right'>价格:</p></div>
+	      <div class='col-6' style='background-color:lavender;'>{{ half_item.price }}</div>
+	    </div>
+	    <div class='row'>
+	    <div class='col-6' style='background-color:lavender;'><p class='text-right'>时间:</p></div>
+	      <div class='col-6' style='background-color:lavender;'>{{ half_item.avi_date }}</div>
+	    </div>
+	  </div>
+	</div>
+	<div class='row'>
+	  <div class='col-5' style='background-color:lavender;'><p class='text-right'>物品描述:</p></div>
+	  <div class='col-7' style='background-color:lavender;'>{{ half_item.description }}</div>
+	</div>
+	<hr>
+        {% endfor %}
+    {% else %}
+        <div class='col-sm'><p class='text-certer'>暂无物品</p></div>
+    {% endif %}
+
+    <div class='pagination'>
+      <span class='step-link'>
+	      {% if half_item_list_single.has_previous %}
+	        <a href="?page=1">&laquo; 首页</a>
+		&nbsp;&nbsp;
+                <a href="?page={{ half_item_list_single.previous_page_number }}">&lt;</a>
+	      {% endif %}
+	      &nbsp;&nbsp;
+	      <span class='current'>
+	        Page {{ half_item_list_single.number }} of {{ half_item_list_single.paginator.num_pages }}.
+	      </span>
+	      &nbsp;&nbsp;
+	      {% if half_item_list_single.has_next %}
+                  <a href='?page={{ half_item_list_single.next_page_number }}'>&gt;</a>
+		  &nbsp;&nbsp;
+		  <a href="?page={{ half_item_list_single.paginator.num_pages }}">尾页 &raquo;</a>
+              {% endif %}
+    </div>
+
+  </div>
+</div>
+{% endblock category %}
